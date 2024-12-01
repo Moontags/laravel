@@ -3,17 +3,23 @@
         Job Titles
     </x-slot:heading>
 
-    <div class="max-w-lg mx-auto shadow-md rounded-lg p-6">
-        <ul class="divide-y divide-gray-200">
+
+        <div class="space-y-4">
             @foreach ($jobs as $job)
-                <li class="py-4">
+
                     <!-- Dynaaminen linkki työpaikan ID:n perusteella -->
                     <a href="/jobs/{{ $job['id'] }}"
-                       class="text-lg font-semibold text-gray-900 hover:text-white-100 underline hover:shadow-md transition duration-200 ease-in-out">
-                        {{ $job['title'] }}
+                       class="text-lg font-semibold text-gray-900 hover:underline block px-4 py-6 border border-gray-200 rounded-lg">
+                       <div class="font-bold text-blue-500 text-sm">{{ $job->employer->name }}</div>
+                     <div>
+                        <strong>{{ $job['title'] }}:</strong> Pays {{ $job ['salary']}}$ per year.
+                     </div>
                     </a>
-                </li>
+
             @endforeach
-        </ul>
+            <div>
+                {{ $jobs->links() }}
+            </div>
+        </div>
     </div>
 </x-layout>

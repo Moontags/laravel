@@ -1,30 +1,26 @@
 <?php
 
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Route;
 use App\Models\Job;
 
-
-// Reitti kotisivulle
 Route::get('/', function () {
-  return view('home');
+    return view('home');
 });
 
-// Reitti työpaikkalistalle
 Route::get('/jobs', function () {
+    $jobs = Job::with('employer')->simplePaginate(5);
+
     return view('jobs', [
-        'jobs' => Job::all()
+        'jobs' => $jobs
     ]);
 });
 
-// Reitti yksittäiselle työpaikalle
 Route::get('/jobs/{id}', function ($id) {
-    // Haetaan työpaikka listasta
-   $job = job::find($id);
+
+    $job = Job::find($id);
     return view('job', ['job' => $job]);
 });
 
-// Reitti yhteydenottosivulle
 Route::get('/contact', function () {
     return view('contact');
 });

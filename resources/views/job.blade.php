@@ -7,5 +7,7 @@
     <p>
         Salary: {{ $job['salary'] }}$ per year.
     </p>
+    <div class="text-bold underline">
     <a href="/jobs">Back to Job List</a>
+</div>
 </x-layout>
