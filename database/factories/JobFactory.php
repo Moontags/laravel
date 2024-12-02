@@ -24,7 +24,7 @@ class JobFactory extends Factory
     {
         return [
             'title' => $this->faker->jobTitle,
-            'employer_id' => Employer::factory(),
+            'employer_id' => Employer::factory(), // Luo työnantaja tälle työpaikalle
             'salary' => $this->faker->numberBetween(40000, 100000),
         ];
     }
