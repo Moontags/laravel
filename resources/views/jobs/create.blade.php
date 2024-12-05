@@ -33,8 +33,6 @@
                       @error('salary')
                       <p class="text-xs text-red-500 font-semibold mt-1">{{ $message }}</p>
                        @enderror
-
-
                      {{-- Here is error example --}}
 
                       {{-- <div class="mt-10">
