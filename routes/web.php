@@ -1,76 +1,39 @@
 <?php
-
+use App\Http\Controllers\JobController;
+use App\Http\Controllers\RegisteredUserController;
+use App\Http\Controllers\SessionController;
 use Illuminate\Support\Facades\Route;
-use App\Models\Job;
-
-Route::get('/', function () {
-    return view('home');
-});
-// Index
-Route::get('/jobs', function () {
-    $jobs = Job::with('employer')->latest()->simplePaginate(5);
-    return view('jobs.index', [
-        'jobs' => $jobs
-    ]);
-});
-// Create
-Route::get('/jobs/create',function () {
-    return view('jobs.create');
-});
-// Show
-Route::get('/jobs/{id}', function ($id) {
-    $job = Job::find($id);
-    return view('jobs.show', ['job' => $job]);
-});
-// Store
-Route::post('/jobs', function() {
-//  dd(request('title'));
-    request()->validate([
-        'title' => ['required', 'min:3'],
-        'salary' => ['required']
-    ]);
 
 
-    Job::create([
-        'title' => request('title'),
-        'salary' => request('salary'),
-        'employer_id' => 1
-    ]);
+// Route::get('/', function () {
+//     return view('home');
+// });
 
-    return redirect('/jobs');
-});
-// Edit
-Route::get('/jobs/{id}/edit', function ($id) {
-    $job = Job::find($id);
-    return view('jobs.edit', ['job' => $job]);
-});
-// Update
-Route::patch('/jobs/{id}', function ($id) {
-    request()->validate([
-        'title' => ['required', 'min:3'],
-        'salary' => ['required']
-    ]);
+// This is shorthand home
+Route::view('/' , 'home');
+Route::view('/contact', 'contact');
+Route::resource('jobs', JobController::class);
 
-    $job = Job::findOrFail($id);
+Route::get('/register', [RegisteredUserController::class, 'create']);
+Route::post('/register', [RegisteredUserController::class, 'store']);
 
-    $job->update([
-        'title' => request('title'),
-        'salary' => request('salary'),
-    ]);
-
- return redirect('/jobs/' . $job->id);
-
-});
-// Destroy
-Route::delete('/jobs/{id}', function ($id) {
-
-$job = Job::findOrFail($id)->delete();
+Route::get('/login',[SessionController::class, 'create']);
+Route::post('/login',[SessionController::class, 'store']);
 
 
-return redirect('/jobs');
 
-});
+// Route::controller(JobController::class)->group(function() {
+//     Route::get('/jobs', 'index');
+//     Route::get('/jobs/create','create');
+//     Route::get('/jobs/{job}', 'show');
+//     Route::post('/jobs', 'store');
+//     Route::get('/jobs/{job}/edit', 'edit');
+//     Route::patch('/jobs/{job}', 'update');
+//     Route::delete('/jobs/{job}', 'destroy');
 
-Route::get('/contact', function () {
-    return view('contact');
-});
+// });
+
+
+// Route::get('/contact', function () {
+//     return view('contact');
+// });
