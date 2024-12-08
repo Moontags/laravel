@@ -58,6 +58,6 @@ abstract class Controller
         $job->delete();
 
 
-     return redirect('/jobs');
+     return redirect('/')->with('message', 'Logged out successfully');
     }
 }

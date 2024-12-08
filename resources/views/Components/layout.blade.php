@@ -28,10 +28,18 @@
             <div class="hidden md:flex ml-auto">
               <div class="flex items-center space-x-4">
 
+                <!-- Not registered -->
                 @guest
                 <x-nav-link href="/login" :active="request()->is('login')">Log in</x-nav-link>
                 <x-nav-link href="/register" :active="request()->is('register')">Register</x-nav-link>
                 @endguest
+                <!-- Registered user -->
+                @auth
+                    <form method="POST" action="/logout">
+                        @csrf
+                        <x-form-button>Log out</x-form-button>
+                    </form>
+                @endauth
 
               </div>
             </div>
